@@ -1,5 +1,5 @@
 from django.db import models
-from library_api import settings
+from django.conf import settings
 
 
 class Book(models.Model):
@@ -10,18 +10,18 @@ class Book(models.Model):
     title = models.CharField(
         max_length=255,
         verbose_name="Название книги",
-        help_text="Введите название книги"
+        help_text="Введите название книги",
     )
     author = models.ForeignKey(
-        'Author',
+        "Author",
         on_delete=models.CASCADE,
         verbose_name="Автор",
-        help_text="Выберите автора книги"
+        help_text="Выберите автора книги",
     )
     genre = models.CharField(
         max_length=100,
         verbose_name="Жанр книги",
-        help_text="Введите жанр книги"
+        help_text="Введите жанр книги",
     )
     publication_year = models.PositiveIntegerField(
         verbose_name="Год издания",
@@ -30,7 +30,7 @@ class Book(models.Model):
     copies_count = models.PositiveIntegerField(
         verbose_name="Количество экземпляров",
         help_text="Введите количество экземпляров книги",
-        default=1
+        default=1,
     )
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name="Дата создания"
@@ -55,7 +55,7 @@ class Author(models.Model):
     name = models.CharField(
         max_length=255,
         verbose_name="Имя автора",
-        help_text="Введите имя автора"
+        help_text="Введите имя автора",
     )
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name="Дата создания"
