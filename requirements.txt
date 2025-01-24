@@ -10,3 +10,4 @@ celery==5.4.0
 django_celery_beat==2.7.0
 requests==2.32.3
 django-cors-headers==4.6.0
+django-decouple==2.1
