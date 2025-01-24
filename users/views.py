@@ -18,7 +18,9 @@ class UserViewSet(viewsets.ModelViewSet):
         """
         Переопределение метода для назначения прав доступа.
         """
-        if self.action == "create":
+        if not self.request.user.is_authenticated:
+            self.permission_classes = []
+        elif self.action == "create":
             self.permission_classes = [~IsModer]
         elif self.action in ["update", "retrieve"]:
             self.permission_classes = [IsModer | IsOwner]
