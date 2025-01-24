@@ -7,35 +7,30 @@ class Book(models.Model):
     Модель для представления книги в библиотеке.
     """
 
-    title = models.TextField(
-        verbose_name="Название книги", help_text="Введите название книги"
+    title = models.CharField(
+        max_length=255,
+        verbose_name="Название книги",
+        help_text="Введите название книги"
     )
     author = models.ForeignKey(
-        "Author",
-        on_delete=models.SET_NULL,
+        'Author',
+        on_delete=models.CASCADE,
         verbose_name="Автор",
-        help_text="Укажите автора книги",
-        blank=True,
-        null=True,
+        help_text="Выберите автора книги"
     )
-    genre = models.TextField(
-        verbose_name="Жанр",
-        help_text="Укажите жанр книги",
-        blank=True,
-        null=True,
+    genre = models.CharField(
+        max_length=100,
+        verbose_name="Жанр книги",
+        help_text="Введите жанр книги"
     )
-    published_year = models.IntegerField(
-        verbose_name="Год издания", help_text="Укажите год издания"
+    publication_year = models.PositiveIntegerField(
+        verbose_name="Год издания",
+        help_text="Введите год издания книги",
     )
-    publisher = models.CharField(
-        max_length=255,
-        verbose_name="Издатель",
-        help_text="Укажите издательство",
-    )
-    quantity = models.IntegerField(
+    copies_count = models.PositiveIntegerField(
         verbose_name="Количество экземпляров",
-        help_text="Укажите количество экземпляров книги",
-        default=1,
+        help_text="Введите количество экземпляров книги",
+        default=1
     )
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name="Дата создания"
@@ -60,9 +55,7 @@ class Author(models.Model):
     name = models.CharField(
         max_length=255,
         verbose_name="Имя автора",
-        help_text="Введите имя автора",
-        blank=True,
-        null=True,
+        help_text="Введите имя автора"
     )
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name="Дата создания"
