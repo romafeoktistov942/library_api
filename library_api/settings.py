@@ -20,6 +20,8 @@ INSTALLED_APPS = [
     "users",
     "library",
     "rest_framework",
+    "rest_framework_simplejwt",
+    "rest_framework.authtoken",
     "drf_yasg",
 ]
 
@@ -61,7 +63,7 @@ DATABASES = {
         "USER": config("POSTGRES_USER"),
         "NAME": config("POSTGRES_DB"),
         "HOST": config("POSTGRES_HOST"),
-        "PORT": config("POSTGRES_PORT", cast=int),
+        "PORT": config("POSTGRES_PORT"),
         "PASSWORD": config("POSTGRES_PASSWORD"),
     }
 }
@@ -108,6 +110,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticated",
     ),
 }
 
