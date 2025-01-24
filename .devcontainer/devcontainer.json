@@ -1,0 +1,29 @@
+{
+    "name": "Django Dev Container",
+    "dockerComposeFile": "../docker-compose.yaml",
+    "service": "web",
+    "workspaceFolder": "/code",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash"
+            },
+            "extensions": [
+                "ms-python.python", 
+                "ms-python.vscode-pylance",
+                "ms-azuretools.vscode-docker",
+                "batisteo.vscode-django",
+                "mhutchie.git-graph",
+                "eamodio.gitlens",
+                "github.vscode-pull-request-github"  // добавлено расширение для GitHub
+            ]
+        }
+    },
+    "remoteUser": "root",
+    "forwardPorts": [8000, 5432],
+    "shutdownAction": "stopCompose",
+    "features": {
+        "git": "latest"  // добавляем установку Git
+    },
+    "postCreateCommand": "apt-get update && apt-get install -y git"  // установка Git при создании контейнера
+}

@@ -1,4 +1,4 @@
-from rest_framework import viewsets, filters, generics
+from rest_framework import viewsets, filters
 from rest_framework.permissions import IsAuthenticated
 from library.models import Book, Author, BookIssue
 from library.serializers import (
@@ -26,20 +26,20 @@ class BookViewSet(viewsets.ModelViewSet):
         """
         Переопределение метода для добавления владельца книги.
         """
-        book = serializer.save()
-        book.owner = self.request.user
-        book.save()
+        serializer.save(owner=self.request.user)
 
     def get_permissions(self):
         """
         Переопределение метода для назначения прав доступа.
         """
         if self.action == "create":
-            self.permission_classes = [~IsModer]
+            self.permission_classes = [IsAuthenticated]
         elif self.action in ["update", "retrieve"]:
-            self.permission_classes = [IsModer | IsOwner]
+            self.permission_classes = [IsAuthenticated, IsModer | IsOwner]
         elif self.action == "destroy":
-            self.permission_classes = [~IsModer | IsOwner]
+            self.permission_classes = [IsAuthenticated, IsOwner]
+        else:
+            self.permission_classes = [IsAuthenticated]
         return super().get_permissions()
 
 
@@ -72,9 +72,7 @@ class BookIssueViewSet(viewsets.ModelViewSet):
         """
         Переопределение метода для добавления информации о пользователе.
         """
-        book_issue = serializer.save()
-        book_issue.user = self.request.user
-        book_issue.save()
+        serializer.save(user=self.request.user)
 
     def get_permissions(self):
         """
@@ -86,4 +84,6 @@ class BookIssueViewSet(viewsets.ModelViewSet):
             self.permission_classes = [IsAuthenticated, IsOwner]
         elif self.action == "destroy":
             self.permission_classes = [IsAuthenticated, IsOwner]
+        else:
+            self.permission_classes = [IsAuthenticated]
         return super().get_permissions()
